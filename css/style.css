@@ -1,0 +1,11 @@
+body{
+	background-color: rgb(241,241,241);
+}
+table{
+	width: 800px; /* Ширина слоя */
+    margin: 0 auto 50px; /* Выравнивание по центру */
+	padding: 15px;
+	margin-top: 50px;
+	background-color: white;
+	text-align:center;
+}
