@@ -51,7 +51,7 @@ Class Model{
         }
         
 	// Метод для получения Списка новостей из БД
-	public function Get_all(){
+	public function Get_News(){
 		$query = mysql_query('SELECT n.*, count(c.news_id = n.id) AS num_comments FROM news AS n LEFT JOIN comments AS c ON n.id = c.news_id GROUP BY n.id ORDER BY n.publication_date DESC');
                 if (!$query){
 			die('Неверный запрос: ' . mysql_error());
@@ -61,6 +61,16 @@ Class Model{
                 }  
 		return $array_results;
 	}
-
+        
+        public function Get_publication($pub_id){
+            $query = mysql_query('SELECT * FROM news WHERE id = '.$pub_id);
+                if (!$query){
+			die('Неверный запрос: ' . mysql_error());
+		}
+                while ($row = mysql_fetch_assoc($query)) {
+                    $array_results[] = $row;
+                }  
+		return $array_results[0];
+        }
 }
 ?>
