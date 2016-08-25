@@ -33,13 +33,34 @@
         // Метод генерации конкретной публикации из списка в виде html кода 
         public function Generate_publication($data){
             $html = "<title>".$data['title']."</title>";
-            $html = "<div id = 'container'>"
+            $html = "<div class = 'container'>"
                         . "<h3>".$data['title']."</h3>"
                         . "<div id = 'pub'>"
                         . $data['description']
                         . "</div><img src = '".$data['img_url']."'/>"
                         . "<div id = 'source'><a href = ".$data['url'].">Источник</a></div>"
                     . "</div>";
+            return $html;
+        }
+        
+        //Метод генерации списка коментариев в виде html кода 
+        public function Generate_comments($data){
+            $html = "<div class = 'container'>"
+                    . "<h3>Комментарии</h3>";
+            if(isset($data)){
+                foreach($data as $comment){
+                    $html .= "<hr/><div class = 'comment'>"
+                            . "<div class = 'comment-info'>"
+                                . "<div class = 'comment-author'>".$comment['username']."</div>"
+                                . "<div class = 'comment-time'>".$comment['time']."</div>"
+                            . "</div>"
+                            . "<div class = 'comment-text'>".$comment['text']."</div>"
+                            . "</div>"
+                            . "<hr/>";
+
+                }
+            }
+            $html .= "</div>";
             return $html;
         }
     }

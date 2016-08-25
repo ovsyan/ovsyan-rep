@@ -16,6 +16,8 @@
             if(isset($_GET['pub_id'])){
                $data = $model->Get_publication($_GET['pub_id']);
                $finalView = $view->Generate_publication($data);
+               $dataComments = $model->Get_comments($_GET['pub_id']);
+               $finalView .= $view->Generate_comments($dataComments);
             }
             else{ 
                 $data = $model->Get_News();

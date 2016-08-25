@@ -1,7 +1,7 @@
 body{
 	background-color: rgb(241,241,241);
 }
-#container, table{
+.container, table{
 	width: 800px; /* Ширина слоя */
     margin: 0 auto 30px; /* Выравнивание по центру */
 	padding: 15px;
@@ -26,4 +26,23 @@ img{
 
 #source a {
 	color: #92908c;
+}
+
+.comment-author{
+	float:left;
+	text-align: left;
+	color: #92908c;
+	width: 50%;
+}
+.comment-time{
+	float: right;
+	text-align: right;
+	color: #92908c;
+	width: 50%;
+}
+.comment-info{
+	min-height: 20px;
+}
+.comment{
+	margin-bottom: 20px;
 }

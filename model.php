@@ -52,7 +52,7 @@ Class Model{
         
 	// Метод для получения Списка новостей из БД
 	public function Get_News(){
-		$query = mysql_query('SELECT n.*, count(c.news_id = n.id) AS num_comments FROM news AS n LEFT JOIN comments AS c ON n.id = c.news_id GROUP BY n.id ORDER BY n.publication_date DESC');
+		$query = mysql_query('SELECT n.id, n.title, n.url, n.publication_date, n.upload_date, count(c.news_id = n.id) AS num_comments FROM news AS n LEFT JOIN comments AS c ON n.id = c.news_id GROUP BY n.id ORDER BY n.publication_date DESC');
                 if (!$query){
 			die('Неверный запрос: ' . mysql_error());
 		}
@@ -63,7 +63,7 @@ Class Model{
 	}
         
         public function Get_publication($pub_id){
-            $query = mysql_query('SELECT * FROM news WHERE id = '.$pub_id);
+            $query = mysql_query('SELECT id, title, description, url, img_url FROM news WHERE id = '.$pub_id);
                 if (!$query){
 			die('Неверный запрос: ' . mysql_error());
 		}
@@ -71,6 +71,18 @@ Class Model{
                     $array_results[] = $row;
                 }  
 		return $array_results[0];
+        }
+        
+        public function Get_comments($pub_id){
+            $query = mysql_query('SELECT c.*, u.username FROM comments AS c LEFT JOIN users AS u ON c.user_id = u.id WHERE c.news_id = '.$pub_id);
+            if (!$query){
+		die('Неверный запрос: ' . mysql_error());
+            }
+            $array_results = array();
+            while ($row = mysql_fetch_assoc($query)) {
+                $array_results[] = $row;
+            }  
+            return $array_results;
         }
 }
 ?>
