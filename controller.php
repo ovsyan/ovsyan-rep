@@ -11,15 +11,33 @@
             $view = new View();
             
             // Начало роутинга. 
-            // Т.к. на данный момент система зависит только от одного параметра (pub_id), для простоты роутинга используется if.
-            // В случае масштабирования планируется переход на switch/case, который на данный момент не имеет смысла.
-            if(isset($_GET['pub_id'])){
-               $data = $model->Get_publication($_GET['pub_id']);
-               $finalView = $view->Generate_publication($data);
-               $dataComments = $model->Get_comments($_GET['pub_id']);
-               $finalView .= $view->Generate_comments($dataComments);
+            if(!empty($_GET)){
+                foreach ($_GET as $key => $value) {
+                    switch ($key):
+                        case('pub_id'):
+                            $data = $model->Get_publication($value);
+                            $finalView = $view->Generate_publication($data);
+                            $dataComments = $model->Get_comments($value);
+                            $finalView .= $view->Generate_comments($dataComments);
+                        break;
+                        case('remove'):
+                            $data = $model->Del_publication($value);
+                            $data = $model->Get_News();
+                            $finalView = $view->Generate_News($data);
+                        break;
+                        case('edit'):
+                            $data = $model->Get_publication($value);
+                            $finalView = $view->Edit_publication_form($data);
+                        break;
+                        case('new-description'):
+                            $data = $model->Update_publication($_GET['id'],$value);
+                            $data = $model->Get_News();
+                            $finalView = $view->Generate_News($data);
+                        break;
+                    endswitch;
+                }
             }
-            else{ 
+            else{
                 $data = $model->Get_News();
                 $finalView = $view->Generate_News($data);
             }

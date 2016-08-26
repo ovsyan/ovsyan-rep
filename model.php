@@ -43,7 +43,9 @@ Class Model{
 			'".mysql_real_escape_string($rss->title)."',
 			'".mysql_real_escape_string($rss->description)."',
 			'".mysql_real_escape_string($rss->enclosure["url"])."',
-			'".mysql_real_escape_string($rss->link)."');");
+			'".mysql_real_escape_string($rss->link)."')"
+                        . "ON DUPLICATE KEY UPDATE "
+                        . "publication_date = '".date('Y-m-d H:i:s', strtotime($rss->pubDate))."';");
 			}
                 if (!$query){
 			die('Неверный запрос: ' . mysql_error());
@@ -83,6 +85,20 @@ Class Model{
                 $array_results[] = $row;
             }  
             return $array_results;
+        }
+        
+        public function Update_publication($id,$data){
+            $query = mysql_query('UPDATE news SET news.title = "'.mysql_real_escape_string($data).'" WHERE news.id = '.$id);
+            if (!$query){
+		die('Неверный запрос: ' . mysql_error());
+            }
+        }
+        
+        public function Del_publication($pub_id){
+            $query = mysql_query('DELETE n.*,c.* FROM news AS n LEFT JOIN comments AS c ON c.news_id = n.id WHERE n.id = '.$pub_id);
+            if (!$query){
+		die('Неверный запрос: ' . mysql_error());
+            }
         }
 }
 ?>

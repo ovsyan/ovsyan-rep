@@ -19,7 +19,8 @@
             foreach($data as $row){
                 $html .= "<tr>";
 		$html .=   "<td>".$row["id"]."</td>"
-                         . "<td>Edit or Remove</td>"
+                         . "<td><a href='?edit=".$row['id']."'>Edit</a> or "
+                        . "<a href = '?remove=".$row['id']."'>Remove</td>"
                          . "<td><a href = '?pub_id=".$row['id']."'>".$row["title"]."</a></td>"
                          . "<td><a href = '".$row["url"]."'>".$row["publication_date"]."</a></td>"
                          . "<td>".$row["upload_date"]."</td>"
@@ -60,7 +61,19 @@
 
                 }
             }
-            $html .= "</div>";
+            $html .= ""
+                    . "</div>";
+            return $html;
+        }
+        public function Edit_publication_form($data){
+            $html = "<div class = 'container'>"
+                    . "<form method = 'get'>"
+                    . "<input name = 'id' value = '".$data['id']."' type = 'hidden'/>"
+                    . "<textarea name = 'new-description'>".$data['title']."</textarea>"
+                    . "<input type = 'submit'>"
+                    . "</form>"
+                    . "</div>";
+            
             return $html;
         }
     }

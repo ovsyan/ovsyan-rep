@@ -46,3 +46,10 @@ img{
 .comment{
 	margin-bottom: 20px;
 }
+textarea{
+	width:800px;
+}
+
+ a {
+	color: #92908c;
+}
