@@ -87,6 +87,18 @@ Class Model{
             return $array_results;
         }
         
+        public function Insert_comment($user,$pub_id ,$data){
+            $query = mysql_query("INSERT INTO `".$this->config['db_name']."`.`comments` (news_id,user_id,text,time) "
+                    . "VALUES ("
+                    . "'". $pub_id ."',"
+                    . "'". $user ."',"
+                    . "'". mysql_real_escape_string($data)."',"
+                    . "NOW());");
+            if (!$query){
+		die('Неверный запрос: ' . mysql_error());
+            }
+        }
+        
         public function Update_publication($id,$data){
             $query = mysql_query('UPDATE news SET news.title = "'.mysql_real_escape_string($data).'" WHERE news.id = '.$id);
             if (!$query){

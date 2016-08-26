@@ -61,7 +61,12 @@
 
                 }
             }
-            $html .= ""
+
+            $html .= "<form>"
+                    . "<input type = 'hidden' name = 'pub_id' value = '".$_GET['pub_id']."'>"
+                    . "<textarea name = 'comment' placeholder = 'Добавить комментарий...'></textarea>"
+                    . "<input type = 'submit'>"
+                    . "</form>"
                     . "</div>";
             return $html;
         }
